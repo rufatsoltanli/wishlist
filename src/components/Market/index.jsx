@@ -5,7 +5,6 @@ function Market() {
     const [data, setData] = useState([])
 
 
-
     const [basket, setBasket] = useState(localStorage.getItem("basket")
         ? JSON.parse(localStorage.getItem("basket")) : []
     )
@@ -31,17 +30,23 @@ function Market() {
             })
     }, [])
 
+    const [MyBoolean, setMyBoolean] = useState(false)
 
-    function addToWishList(newWisdhed) {
-        setWishList([...wishList, { ...newWisdhed, wished: false }])
+    function addToWishList(x, id, bulean) {
 
+
+        setMyBoolean(value => !value);
+
+        if (bulean === false) {
+            setWishList([...wishList, x])
+        } else setWishList((current) =>
+            current.filter((list) => list.id !== id)
+
+        );
 
     }
+
     console.log(wishList);
-    function wishToggle(x) {
-        x.wished = !x.wished
-    }
-
     function addToBasket(newItem) {
         let elementIndex = basket.findIndex((x) => x.id === newItem.id)
         console.log(elementIndex);
@@ -81,13 +86,20 @@ function Market() {
     return (
 
         <div>
+            <button onClick={() => document.body.classList.toggle("dark")}>Change theme</button>
             <h1>Umumi hisse</h1>
             <h3 >Wish List</h3>
             <div className="wishList">
                 {
                     wishList.map(
-                        (newItem) => {
-                            return
+                        (item) => {
+                            return <ul>
+                                <li>{item.id}</li>
+                                <li>{item.name}</li>
+                                <li><button onClick={() => { addToWishList(item, item.id, MyBoolean) }}><i class="fa-solid fa-heart"></i></button></li>
+
+
+                            </ul>
 
 
                         }
@@ -117,13 +129,15 @@ function Market() {
 
             <div className="products">
                 {
+
                     data.map(
                         (x) => {
                             return <ul key={x.id}>
                                 <li>{x.id}</li>
                                 <li>{x.name}</li>
                                 <li><button onClick={() => addToBasket(x)}>Add to Basket</button></li>
-                                <li><button onClick={() => { addToWishList(x); wishToggle(x) }}>Add to Wish List</button></li>
+                                <li><button onClick={() => { addToWishList(x, x.id, MyBoolean) }}><i class="fa-regular fa-heart"></i></button></li>
+
                                 <li></li>
                             </ul>
                         }
