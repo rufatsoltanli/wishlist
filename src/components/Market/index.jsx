@@ -23,7 +23,7 @@ function Market() {
 
 
     useEffect(() => {
-        axios.get("https://northwind.vercel.app/api/products")
+        axios.get("https://fakestoreapi.com/products")
             .then(function (response) {
 
                 setData(response.data)
@@ -94,8 +94,9 @@ function Market() {
                     wishList.map(
                         (item) => {
                             return <ul>
-                                <li>{item.id}</li>
-                                <li>{item.name}</li>
+                                <li><img src={item.image} alt="" /></li>
+                                <li>Price : ${item.price}</li>
+                                <li>{item.title}</li>
                                 <li><button onClick={() => { addToWishList(item, item.id, MyBoolean) }}><i class="fa-solid fa-heart"></i></button></li>
 
 
@@ -113,8 +114,9 @@ function Market() {
                     basket.map(
                         (newItem) => {
                             return <ul key={newItem.id}>
-                                <li>{newItem.id}</li>
-                                <li>{newItem.name}</li>
+                                <li><img src={newItem.image} alt="" /></li>
+                                <li>Price : ${newItem.price}</li>
+                                <li>{newItem.title}</li>
                                 <li>Say: {newItem.count}
                                     <button onClick={() => setCountValue(true, newItem)}>+</button>
                                     <button onClick={() => setCountValue(false, newItem)}>-</button>
@@ -133,8 +135,9 @@ function Market() {
                     data.map(
                         (x) => {
                             return <ul key={x.id}>
-                                <li>{x.id}</li>
-                                <li>{x.name}</li>
+                                <li><img src={x.image} alt="" /></li>
+                                <li>{x.title}</li>
+                                <li>Price : ${x.price}</li>
                                 <li><button onClick={() => addToBasket(x)}>Add to Basket</button></li>
                                 <li><button onClick={() => { addToWishList(x, x.id, MyBoolean) }}><i class="fa-regular fa-heart"></i></button></li>
 
